@@ -1,0 +1,93 @@
+/* ------------ Global Reset ------------ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font-family: 'Pretendard', 'sans-serif';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 70px;
+    /* 헤더 높이만큼 여백 */
+}
+
+/* ------------ Sticky Topbar ------------ */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: 54px;
+    line-height: 54px;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+/* ------------ 가로 스크롤 레일 ------------ */
+.rail {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 18px 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* iOS 부드러운 스크롤 */
+}
+
+.rail::-webkit-scrollbar {
+    display: none
+}
+
+/* ------------ Chip (= 카테고리 버튼) ------------ */
+.chip {
+    flex: 0 0 auto;
+    /* 가로목록 고정폭 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    scroll-snap-align: start;
+}
+
+.chip img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #ddd;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .18);
+    transition: transform .25s, box-shadow .25s;
+}
+
+.chip span {
+    font-size: .9rem;
+    font-weight: 500;
+    color: #444;
+    white-space: nowrap;
+}
+
+/* hover / 터치 눌림 효과 */
+.chip:active img,
+.chip:hover img {
+    transform: scale(1.07);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, .28);
+}
+
+/* 선택된(active) 칩 강조 */
+.chip.active img {
+    box-shadow: 0 0 0 3px #ff0050 inset, 0 6px 16px rgba(0, 0, 0, .25);
+}
+
+.chip.active span {
+    color: #ff0050;
+    font-weight: 600;
+}

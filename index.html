@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>character Picker</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <!-- 상단 고정 헤더 -->
+    <header class="topbar">캐릭터 선택</header>
+
+    <!-- 요기요식 가로 레일 -->
+    <nav class="rail" id="rail"></nav>
+
+    <!-- 데모용 여백 -->
+    <main style="height:2000px;background:#fafafa"></main>
+
+
+    <!-- 캐릭터 데이터 & 동적 렌더링 -->
+    <script>
+        const items = [
+            { name: '피카츄', file: '피카츄.jfif', color: '#ffeb3b' },
+            { name: '아이언맨', file: '아이언맨.jfif', color: '#e53935' },
+            { name: '배트맨', file: '배트맨.jfif', color: '#424242' },
+            { name: '현빈', file: '현빈.jfif', color: '#8d6e63' }
+        ];
+
+        const rail = document.getElementById('rail');
+
+        items.forEach(c => {
+            rail.insertAdjacentHTML('beforeend', `
+        <button class="chip" style="--bg:${c.color}" data-name="${c.name}">
+        <img src="사진/${c.file}" alt="${c.name}" />
+        <span>${c.name}</span>
+        </button>
+    `);
+        });
+
+        // 선택 효과
+        rail.addEventListener('click', e => {
+            const chip = e.target.closest('.chip');
+            if (!chip) return;
+
+            rail.querySelectorAll('.chip').forEach(el => el.classList.remove('active'));
+            chip.classList.add('active');
+
+            alert(`${chip.dataset.name} 선택!`);
+        });
+    </script>
+</body>
+
+</html>
