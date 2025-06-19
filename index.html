@@ -47,7 +47,10 @@
             rail.querySelectorAll('.chip').forEach(el => el.classList.remove('active'));
             chip.classList.add('active');
 
-            alert(`${chip.dataset.name} 선택!`);
+            
+
+            const characterName = chip.dataset.name;
+            window.location.href = `chat.html?name=${characterName}`;
         });
     </script>
 </body>

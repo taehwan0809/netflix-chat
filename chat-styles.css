@@ -1,0 +1,138 @@
+/* =============================== 기본 스타일 =============================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+}
+
+/* ========================== 상단 고정 헤더 ========================== */
+.topbar {
+    position: sticky;
+    top: 0;
+    height: 54px;
+    line-height: 54px;
+    background: #fff;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-bottom: 1px solid #ddd;
+    z-index: 10;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-header button {
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.chat-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* ========================== 채팅 목록 ========================== */
+.chat {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #fafafa;
+    padding: 20px;
+}
+
+.chat-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bubble {
+    max-width: 70%;
+    padding: 12px 20px;
+    border-radius: 15px;
+    font-size: 1rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.bubble.out {
+    align-self: flex-end;
+    background-color: var(--out-bg);
+    color: var(--out-clr);
+}
+
+.bubble.in {
+    align-self: flex-start;
+    background-color: var(--in-bg);
+    color: var(--in-clr);
+}
+
+/* ========================== 메시지 입력 폼 ========================== */
+.msg-form {
+    display: flex;
+    padding: 12px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+
+.msg-form input {
+    flex-grow: 1;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    background-color: #fff;
+    margin-right: 12px;
+}
+
+/* ========================== 선택한 캐릭터에 맞는 색상 ========================== */
+:root {
+    --out-bg: #e0e0e0;
+    --out-clr: #000;
+    --in-bg: #90caf9;
+    --in-clr: #000;
+}
+
+.chat-header {
+    background-color: var(--out-bg);
+}
+
+.chat-list .bubble.in {
+    background-color: var(--in-bg);
+    color: var(--in-clr);
+}
+
+.chat-list .bubble.out {
+    background-color: var(--out-bg);
+    color: var(--out-clr);
+}

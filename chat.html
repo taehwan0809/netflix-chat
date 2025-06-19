@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>캐릭터 챗</title>
+    <link rel="stylesheet" href="chat-styles.css" />
+</head>
+
+<body>
+    <section class="chat">
+        <header class="chat-header">
+            <button id="backBtn">←</button>
+            <h2 id="chatTitle">채팅 시작</h2>
+        </header>
+
+        <ul id="chatList" class="chat-list"></ul>
+
+        <form id="msgForm" class="msg-form">
+            <input id="msgInput" placeholder="메시지 입력…" autocomplete="off" />
+        </form>
+    </section>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const charName = urlParams.get('name'); // 선택한 캐릭터 이름 가져오기
+
+        const chatTit = document.getElementById('chatTitle');
+        const chatList = document.getElementById('chatList');
+        const msgForm = document.getElementById('msgForm');
+        const msgInput = document.getElementById('msgInput');
+
+        let currentTheme = {
+            outBg: '#ffffff',
+            outColor: '#000',
+            inBg: '#ffeb3b',
+            inColor: '#000',
+        };
+
+        chatTit.textContent = charName;
+
+        if (charName === '아이언맨') {
+            currentTheme = { outBg: '#fff176', outColor: '#000', inBg: '#c62828', inColor: '#fff' };
+        } else if (charName === '배트맨') {
+            currentTheme = { outBg: '#9e9e9e', outColor: '#000', inBg: '#212121', inColor: '#fff' };
+        } else if (charName === '피카츄') {
+            currentTheme = { outBg: '#ffcdd2', outColor: '#000', inBg: '#ffeb3b', inColor: '#000' };
+        } else if (charName === '현빈') {
+            currentTheme = { outBg: '#212121', outColor: '#fff', inBg: '#556B2F', inColor: '#fff' };
+        }
+
+        document.documentElement.style.setProperty('--out-bg', currentTheme.outBg);
+        document.documentElement.style.setProperty('--out-clr', currentTheme.outColor);
+        document.documentElement.style.setProperty('--in-bg', currentTheme.inBg);
+        document.documentElement.style.setProperty('--in-clr', currentTheme.inColor);
+
+        if (charName === '현빈') 
+    document.getElementById('chatTitle').style.color = '#fff';  // 현빈일 때 제목 글자색 흰색
+
+        msgForm.onsubmit = (e) => {
+            e.preventDefault();
+            if (!msgInput.value.trim()) return;
+            appendMsg('out', msgInput.value.trim());
+            
+            var msgOutput = ""
+
+            fetch('https://bz60o67w48.execute-api.ap-southeast-2.amazonaws.com/chatgpt',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    char: charName,
+                    msg: msgInput.value
+                })
+                },
+            )
+            .then(response => response.text())
+            .then(text => {
+                appendMsg('in',text)
+            })
+
+            msgInput.value = '';
+            
+            // setTimeout(() => appendMsg('in', '…답변!'), 600);
+        };
+
+        async function appendMsg(type, text) {
+            chatList.insertAdjacentHTML('beforeend', `<li class="bubble ${type}">${text}</li>`);
+            chatList.scrollTop = chatList.scrollHeight;
+        }
+
+        document.getElementById('backBtn').onclick = () => {
+            window.location.href = 'index.html'; // 캐릭터 선택 화면으로 돌아가기
+        };
+    </script>
+</body>
+
+</html>
